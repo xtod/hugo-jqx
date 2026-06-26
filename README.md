@@ -1,6 +1,6 @@
 # Essay
 
-### 一款简洁如纸的Hugo主题 A paper-simple Hugo theme
+### 一款简洁的Hugo主题
 
 [示例站点](https://0x8.net) | [Demo](https://0x8.net)
 
