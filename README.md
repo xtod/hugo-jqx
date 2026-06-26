@@ -1,8 +1,8 @@
 # Hugo jqx theme
 
-### Hugo博客主题，简单如纸
+### 一款简洁如纸的Hugo主题
 
-[demosite](https://0x8.net)
+[示例站点](https://0x8.net)
 
 ![Screenshot](https://raw.githubusercontent.com/xtod/hugo-jqx/refs/heads/main/images/screenshot.png)
 
