@@ -1,4 +1,5 @@
 [module]
-[module.hugoVersion]
-  extended = true
-  min = "0.158.0"
+  [module.hugoVersion]
+    extended = true
+    min = "0.120.0"
+    max = "0.163.3"  # 使用一个明确、稳定的最大版本
