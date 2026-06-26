@@ -1,0 +1,73 @@
+{{ define "main" }}
+<main class="term-page">
+    <header class="page-header">
+        <h1>
+            {{ if eq .Data.Plural "tags" }}
+                #{{ .Title }}
+            {{ else if eq .Data.Plural "categories" }}
+                分类：{{ .Title }}
+            {{ else }}
+                {{ .Title }}
+            {{ end }}
+        </h1>
+        
+        <p class="page-description">
+            共找到 <strong>{{ len .Pages }}</strong> 篇文章
+            {{ if .Description }}
+                <br>{{ .Description }}
+            {{ end }}
+        </p>
+    </header>
+
+    {{ if .Pages }}
+    <ul class="post-list">
+        {{ range (.Paginator 10).Pages }}
+        <li class="post-item">
+            <article>
+                <!-- 特色图 -->
+                {{ if .Params.featuredImage }}
+                <a href="{{ .RelPermalink }}" class="post-image">
+                    <img src="{{ .Params.featuredImage | relURL }}" alt="{{ .Title }}" loading="lazy">
+                </a>
+                {{ end }}
+
+                <header>
+                    <h2 class="post-title">
+                        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                    </h2>
+
+                    <div class="post-meta">
+                        <time datetime="{{ .Date.Format "2006-01-02" }}">
+                            {{ .Date.Format "2006-01-02" }}
+                        </time>
+
+                        {{ with .Params.categories }}
+                        <span class="categories">
+                            {{ range . }}
+                            <a href="{{ "/categories/" | relLangURL }}{{ . | urlize }}/">{{ . }}</a>
+                            {{ end }}
+                        </span>
+                        {{ end }}
+                    </div>
+                </header>
+
+                <div class="post-summary">
+                    {{ .Summary | plainify | truncate 180 "..." }}
+                </div>
+
+                <a href="{{ .RelPermalink }}" class="read-more">阅读全文 →</a>
+            </article>
+        </li>
+        {{ end }}
+    </ul>
+
+    <!-- 分页导航 -->
+    {{ template "_internal/pagination.html" . }}
+
+    {{ else }}
+    <div class="no-content">
+        <p>该{{ if eq .Data.Plural "tags" }}标签{{ else }}分类{{ end }}下暂无文章。</p>
+    </div>
+    {{ end }}
+</main>
+{{ end }}

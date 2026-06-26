@@ -1,0 +1,44 @@
+{{ define "main" }}
+<main class="homepage">
+    <section class="recent-posts">
+        <!-- 这里的 5 表示每页显示5篇，可以改为任意数字 -->
+        {{ $paginator := .Paginate (where .Site.RegularPages "Section" "post") 5 }}
+        
+        {{ if $paginator.Pages }}
+        <ul class="post-list">
+            {{ range $paginator.Pages }}
+            <li class="post-item">
+                <article>
+                    <header>
+                        <h3 class="post-title">
+                            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                        </h3>
+                        <div class="post-meta">
+                            <time datetime="{{ .Date.Format "2006-01-02" }}">
+                                {{ .Date.Format "2006-01-02" }}
+                            </time>
+                            {{ with .Params.tags }}
+                            <span class="tags">
+                                {{ range . }}
+                                <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">#{{ . }}</a>
+                                {{ end }}
+                            </span>
+                            {{ end }}
+                        </div>
+                    </header>
+                    <div class="post-summary">
+                        {{ .Summary | plainify | truncate 150 }}
+                    </div>
+                </article>
+            </li>
+            {{ end }}
+        </ul>
+        
+        <!-- 分页导航 -->
+        {{ template "_internal/pagination.html" . }}
+        {{ else }}
+        <p>暂无文章，请添加 <code>content/post/</code> 目录下的 Markdown 文件。</p>
+        {{ end }}
+    </section>
+</main>
+{{ end }}

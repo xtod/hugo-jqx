@@ -1,0 +1,35 @@
+{{ define "main" }}
+<div class="error-page" style="text-align: center; padding: 4rem 1rem;">
+    <h1 style="font-size: 6rem; margin: 0; color: var(--primary-color);">404</h1>
+    
+    <div style="font-size: 3rem; margin: 1rem 0;">
+        🧐
+    </div>
+    
+    <h2 style="font-size: 2rem; margin: 1rem 0;">页面走丢了</h2>
+    
+    <p style="font-size: 1.1rem; color: var(--text-secondary); max-width: 500px; margin: 0 auto 2rem;">
+        抱歉，您访问的页面不存在。可能是链接已失效，或者页面已被移除。
+    </p>
+    
+    <!-- 可选：显示最近的文章 -->
+    <div style="margin-top: 3rem; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <h3 style="border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+            你可能感兴趣的文章：
+        </h3>
+        <ul style="list-style: none; padding: 0; margin-top: 1rem;">
+            {{ $recent := where .Site.RegularPages "Section" "post" | first 5 }}
+            {{ range $recent }}
+            <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">
+                <a href="{{ .RelPermalink }}" style="color: var(--text-color); text-decoration: none;">
+                    {{ .Title }}
+                </a>
+                <span style="color: var(--text-light); font-size: 0.85rem; margin-left: 0.5rem;">
+                    {{ .Date.Format "2006-01-02" }}
+                </span>
+            </li>
+            {{ end }}
+        </ul>
+    </div>
+</div>
+{{ end }}

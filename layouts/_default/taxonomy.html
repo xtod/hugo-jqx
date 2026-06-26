@@ -1,0 +1,38 @@
+{{ define "main" }}
+<main class="taxonomy-page">
+    <header class="page-header">
+        <h1>
+            {{ if eq .Kind "taxonomy" }}
+                {{ if eq .Data.Plural "tags" }}全部标签{{ else if eq .Data.Plural "categories" }}全部分类{{ else }}{{ .Title }}{{ end }}
+            {{ else }}
+                {{ .Title }}
+            {{ end }}
+        </h1>
+        
+        <p class="page-description">
+            {{ if and .Data .Data.Terms }}
+                共 <strong>{{ len .Data.Terms }}</strong> 个{{ if eq .Data.Plural "tags" }}标签{{ else if eq .Data.Plural "categories" }}分类{{ else }}项目{{ end }}
+            {{ else }}
+                暂无内容
+            {{ end }}
+        </p>
+    </header>
+
+    {{ if and .Data .Data.Terms }}
+    <div class="tag-cloud">
+        {{ range .Data.Terms.Alphabetical }}
+        <a href="{{ .Page.RelPermalink }}" 
+           class="tag-cloud-item"
+           style="font-size: {{ mul (add (div (sub .Count 1) 10) 1) 0.85 }}rem;">
+            {{ .Page.Title }}
+            <span class="tag-count">({{ .Count }})</span>
+        </a>
+        {{ end }}
+    </div>
+    {{ else }}
+    <div class="no-content">
+        <p>暂无{{ if eq .Data.Plural "tags" }}标签{{ else if eq .Data.Plural "categories" }}分类{{ else }}内容{{ end }}。</p>
+    </div>
+    {{ end }}
+</main>
+{{ end }}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="{{ $.Site.Language.Locale | default "zh-cn" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 标题（关键修复：使用 $.Site） -->
+    {{ block "title" . }}
+        <title>{{ $.Site.Title }}{{ if .Title }} - {{ .Title }}{{ end }}</title>
+    {{ end }}
+
+    <meta name="description" content="{{ if .IsHome }}{{ $.Site.Params.description | default $.Site.Title }}{{ else }}{{ .Description | default .Summary | default $.Site.Params.description }}{{ end }}">
+
+    <!-- CSS -->
+    {{ $css := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
+    {{ if $css }}
+        <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
+    {{ else }}
+        <link rel="stylesheet" href="{{ "/css/main.css" | relURL }}">
+    {{ end }}
+
+    <!-- RSS -->
+    {{ with .OutputFormats.Get "RSS" }}
+        <link rel="alternate" href="{{ .RelPermalink }}" type="application/rss+xml" title="{{ $.Site.Title }}">
+    {{ end }}
+
+    <!-- 图标 -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ .Title | default $.Site.Title }}">
+    <meta property="og:description" content="{{ if .IsHome }}{{ $.Site.Params.description }}{{ else }}{{ .Description | default .Summary }}{{ end }}">
+    <meta property="og:url" content="{{ .Permalink }}">
+
+    <meta name="fediverse:creator" content="@jidan@mastodon.social" />
+
+    <!-- AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1632085368384154" crossorigin="anonymous"></script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TYP57TN71P"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TYP57TN71P');
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <nav>
+                <a href="{{ "/" | relURL }}" class="site-title">{{ $.Site.Title }}</a>
+                
+                <ul class="nav-menu">
+                    {{ range $.Site.Menus.main }}
+                    <li>
+                        <a href="{{ .URL | relURL }}" {{ if $.IsMenuCurrent .Menu . }}class="active"{{ end }}>
+                            {{ .Name }}
+                        </a>
+                    </li>
+                    {{ end }}
+                </ul>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            {{ block "main" . }}{{ end }}
+        </main>
+
+        <footer class="site-footer">
+<small>
+    <a target="_blank" href="https://bandwagonhost.com/aff.php?aff=2547">VPS</a>&nbsp;&nbsp;
+    <a target="_blank" href="https://autohotkey.top/">Autohotkey</a>&nbsp;&nbsp;
+    <a target="_blank" href="https://opensuse.top/">openSUSE</a>&nbsp;&nbsp;
+    <a target="_blank" href="https://litiaotiao.cn/">李跳跳</a>&nbsp;&nbsp;
+    <a target="_blank" href="https://7zip.top/">7zip</a>&nbsp;&nbsp;
+    <a target="_blank" href="https://qgis.top/">QGIS中文网</a>&nbsp;&nbsp;
+    <a target="_blank" href="https://bailuyuan.org/">白鹿原</a>&nbsp;&nbsp;
+    <a target="_blank" href="https://huangdineijing.org/">黄帝内经</a>&nbsp;&nbsp;
+    <a target="_blank" href="https://LearnSQL.cn/">LearnSQL</a>&nbsp;&nbsp;
+    <a target="_blank" href="https://rgbs.top/">RGB色码</a>&nbsp;&nbsp;
+    <a target="_blank" href="https://unix.pub/">UNIX</a>&nbsp;&nbsp;
+    <a target="_blank" href="https://wqchs.com/">晚清沧海事</a>&nbsp;&nbsp;
+    <a target="_blank" href="https://guwenguanzhi.cn/">古文观止</a>&nbsp;&nbsp;
+    <a target="_blank" href="https://www.boyouquan.com/home" title="博客人的朋友圈，将一个个散落在各处的孤岛连接成一片广袤无垠的新大陆！">博友圈</a>&nbsp;&nbsp;
+    <a rel="me" href="https://mastodon.social/@jidan">Mastodon</a>&nbsp;&nbsp;
+    <a href="/index.xml">RSS</a>&nbsp;&nbsp;
+    <a href="/sitemap.xml">Sitemap</a>
+</small>
+        </footer>
+    </div>
+</body>
+</html>

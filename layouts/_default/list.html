@@ -1,0 +1,75 @@
+{{ define "main" }}
+<main class="list-page">
+    <header class="page-header">
+        <h1>{{ .Title }}</h1>
+        {{ if .Description }}
+            <p class="page-description">{{ .Description }}</p>
+        {{ end }}
+        
+        {{ if .Paginator }}
+        <div class="page-info">
+            共 {{ .Paginator.TotalPages }} 页 • {{ .Paginator.TotalNumberOfElements }} 篇文章
+        </div>
+        {{ end }}
+    </header>
+
+    {{ if .Paginator.Pages }}
+    <ul class="post-list">
+        {{ range .Paginator.Pages }}
+        <li class="post-item">
+            <article>
+                <!-- 特色图（可选） -->
+                {{ if .Params.featuredImage }}
+                <a href="{{ .RelPermalink }}" class="post-image">
+                    <img src="{{ .Params.featuredImage | relURL }}" alt="{{ .Title }}" loading="lazy">
+                </a>
+                {{ end }}
+
+                <header>
+                    <h2 class="post-title">
+                        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                    </h2>
+
+                    <div class="post-meta">
+                        <time datetime="{{ .Date.Format "2006-01-02" }}">
+                            {{ .Date.Format "2006-01-02" }}
+                        </time>
+
+                        {{ with .Params.categories }}
+                        <span class="categories">
+                            {{ range . }}
+                            <a href="{{ "/categories/" | relLangURL }}{{ . | urlize }}/">{{ . }}</a>
+                            {{ end }}
+                        </span>
+                        {{ end }}
+
+                        {{ with .Params.tags }}
+                        <span class="tags">
+                            {{ range . }}
+                            <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">#{{ . }}</a>
+                            {{ end }}
+                        </span>
+                        {{ end }}
+                    </div>
+                </header>
+
+                <div class="post-summary">
+                    {{ .Summary | plainify | truncate 180 "..." }}
+                </div>
+
+                <a href="{{ .RelPermalink }}" class="read-more">阅读全文 →</a>
+            </article>
+        </li>
+        {{ end }}
+    </ul>
+
+    <!-- 分页 -->
+    {{ template "_internal/pagination.html" . }}
+
+    {{ else }}
+    <div class="no-posts">
+        <p>暂无内容</p>
+    </div>
+    {{ end }}
+</main>
+{{ end }}

@@ -1,0 +1,34 @@
+{{- $url := .Destination -}}
+{{- $isRemote := strings.HasPrefix $url "http" -}}
+{{- $isAnchor := strings.HasPrefix $url "#" -}}
+{{- $isMail := strings.HasPrefix $url "mailto:" -}}
+{{- $isTel := strings.HasPrefix $url "tel:" -}}
+{{- $title := .Title -}}
+{{- $text := .Text -}}
+
+{{- $attrs := dict "href" $url -}}
+
+{{- if $title -}}
+    {{- $attrs = merge $attrs (dict "title" $title) -}}
+{{- end -}}
+
+{{- if or $isRemote (and (not $isAnchor) (not $isMail) (not $isTel)) -}}
+    {{- $attrs = merge $attrs (dict "target" "_blank" "rel" "noopener noreferrer") -}}
+{{- end -}}
+
+{{- if $isMail -}}
+    {{- $attrs = merge $attrs (dict "rel" "noopener noreferrer") -}}
+{{- end -}}
+
+<a
+    {{- range $key, $value := $attrs -}}
+        {{- if $value -}}
+            {{- printf " %s=%q" $key $value | safeHTMLAttr -}}
+        {{- end -}}
+    {{- end -}}
+>
+    {{- $text | safeHTML -}}
+    {{- if $isRemote -}}
+        <span class="external-link-icon">↗</span>
+    {{- end -}}
+</a>

@@ -1,0 +1,55 @@
+{{ define "main" }}
+<article class="page">
+    <header class="page-header">
+        <h1 class="page-title">{{ .Title }}</h1>
+        {{ with .Params.description }}
+        <p class="page-description">{{ . }}</p>
+        {{ end }}
+    </header>
+
+    <div class="page-content">
+        {{ .Content }}
+    </div>
+
+    {{ if .Params.servers }}
+    <section class="server-list">
+        <h2>{{ .Params.servers.title | default "服务器列表" }}</h2>
+        {{ range .Params.servers.items }}
+        <div class="server-item">
+            <h3>{{ .name }} <small>{{ .location }}</small></h3>
+            <ul class="server-details">
+                <li><strong>域名：</strong>{{ .domain }}</li>
+                <li><strong>公网 IPv4：</strong>{{ .ipv4 }}</li>
+                <li><strong>公网 IPv6：</strong>{{ .ipv6 }}</li>
+                <li><strong>DN42 IPv4：</strong>{{ .dn42_ipv4 }}</li>
+                <li><strong>DN42 IPv6：</strong>{{ .dn42_ipv6 }}</li>
+                <li><strong>Link-local IPv6：</strong>{{ .link_local_ipv6 }}</li>
+                {{ with .wireguard_key }}
+                <li><strong>WireGuard 公钥：</strong><code>{{ . }}</code></li>
+                {{ end }}
+            </ul>
+        </div>
+        {{ end }}
+    </section>
+    {{ end }}
+
+    {{ if .Params.config_templates }}
+    <section class="config-templates">
+        <h2>{{ .Params.config_templates.title | default "推荐配置模板" }}</h2>
+        {{ range .Params.config_templates.items }}
+        <div class="config-item">
+            <h3>{{ .name }}</h3>
+            {{ if .description }}<p>{{ .description }}</p>{{ end }}
+            <pre><code class="language-{{ .lang }}">{{ .content }}</code></pre>
+        </div>
+        {{ end }}
+    </section>
+    {{ end }}
+
+    <footer class="page-footer">
+        {{ with .Params.lastmod }}
+        <p class="lastmod">页面最后更新：{{ . | time.Format "2006-01-02" }}</p>
+        {{ end }}
+    </footer>
+</article>
+{{ end }}
