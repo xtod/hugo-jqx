@@ -5,7 +5,7 @@ description = "a simple hugo theme as paper"
 homepage = "https://github.com/xtod/hugo-essay"
 demosite = "https://0x8.net"
 tags = ["responsive", "clean", "blog", "simple", "minimal", "mobile"]
-features = []
+features = ["clean","minimal", "mobile"]
 min_version = "0.160.0"
 
 [author]
