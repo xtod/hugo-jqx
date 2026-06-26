@@ -1,10 +1,10 @@
-# Hugo jqx theme
+# Essay
 
 ### 一款简洁如纸的Hugo主题
 
 [示例站点](https://0x8.net)
 
-![Screenshot](https://raw.githubusercontent.com/xtod/hugo-jqx/refs/heads/main/images/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/xtod/hugo-essay/refs/heads/main/images/screenshot.png)
 
 ## 特点
 
@@ -20,7 +20,7 @@
 ```sh
 hugo new site example
 cd example\themes
-git clone https://github.com/xtod/hugo-jqx.git
+git clone https://github.com/xtod/hugo-essay.git
 cd ..
 hugo server --minify
 ```
@@ -30,7 +30,7 @@ hugo server --minify
 ```toml
 baseURL = 'https://example.org/'
 title = 'jqx'
-theme = 'hugo-jqx'
+theme = 'hugo-essay'
 paginate = 5
 
 languageCode = 'zh-cn'       
