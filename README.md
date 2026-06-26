@@ -1,6 +1,6 @@
 # Essay
 
-### 一款简洁如纸的Hugo主题
+### 一款简洁如纸的Hugo主题 A paper-simple Hugo theme
 
 [示例站点](https://0x8.net) | [Demo](https://0x8.net)
 
@@ -15,17 +15,43 @@
 - 核心功能无需JavaScript
 - 自动切换暗黑模式
 
-## 试用方法
+## 使用方法
 
 ```sh
 hugo new site example
 cd example\themes
 git clone https://github.com/xtod/hugo-essay.git
 cd ..
+hugo new content\post\post1.md
 hugo server --minify
 ```
 
+### 默认archetypes文件
+
+`archetypes\default.md`
+
+```md
+
+---
+title: '{{ replace .File.ContentBaseName "-" " " | title }}'
+date: {{ .Date }}
+slug: "{{ replace .File.ContentBaseName "-" " " | title }}"
+description: "default description"
+author: jqx
+categories: ["categorie"]
+Keywords: ["key1","key2"]
+tags: ["tag1","tag2"]
+images:
+- /banner1.png
+- /banner2.png
+draft: true
+---
+
+```
+
 ## 配置文件
+
+示例配置文件在`exampleSite\hugo.toml`，内容如下：
 
 ```toml
 baseURL = 'https://example.org/'
